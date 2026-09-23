@@ -1,0 +1,284 @@
+{
+  "name": "executive Biodata",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "998a00b2-0d2c-4200-9a8f-834a334bc6b0",
+              "name": "Date of Birth",
+              "value": "={{ DateTime.fromISO($json.body.date_of_birth).toFormat('dd MMMM') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "3a353efa-d919-4031-9da2-8f377b8e5b2d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1VmYuWMLU3GtTdw8fnRKpcmI3Xd7W_wKA15UMtiSZWJA/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Bio data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VmYuWMLU3GtTdw8fnRKpcmI3Xd7W_wKA15UMtiSZWJA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Full name ": "={{ $('Webhook').item.json.body.full_name }}",
+            "Potfolio in fellowship": "={{ $('Webhook').item.json.body.portfolio }}",
+            "Whatsapp number ": "={{ $('Webhook').item.json.body.whatsapp_number }}",
+            "Other number": "={{ $('Webhook').item.json.body.other_number }}",
+            "Date of Birth": "={{ $('Edit Fields').item.json['Date of Birth'] }}",
+            "Profile picture": "={{ $json.webViewLink }}",
+            "Gmail": "={{ $('Webhook').item.json.body.gmail }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Full name ",
+              "displayName": "Full name ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Potfolio in fellowship",
+              "displayName": "Potfolio in fellowship",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Whatsapp number ",
+              "displayName": "Whatsapp number ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Other number",
+              "displayName": "Other number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Profile picture",
+              "displayName": "Profile picture",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date of Birth",
+              "displayName": "Date of Birth",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Gmail",
+              "displayName": "Gmail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        672,
+        0
+      ],
+      "id": "2a41c853-8991-4751-b50e-ec7c6d62f161",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "8Vt5BSNrP5UfLDSE",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "profile_picture",
+        "name": "={{ $binary.profile_picture.fileName }}",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1Wh7lNl2RfF61a5Bt4o3SJcg-PRAnelql",
+          "mode": "list",
+          "cachedResultName": "Lasu ojo KABOD pictures ",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1Wh7lNl2RfF61a5Bt4o3SJcg-PRAnelql"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        448,
+        0
+      ],
+      "id": "0d57bcb1-ad60-4e6f-8094-68bc583ff6e2",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "AYkslsQcLrrKGT4z",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.gmail }} ",
+        "subject": "Thank you for Filling the form",
+        "message": "=Hi {{ $('Webhook').item.json.body.full_name.split(' ').pop() }} ,  Thank you for filling out the details for the RCF LASU Ojo executives list. We have successfully received your information and profile picture.  Best regards, The Team  How the First Na",
+        "options": {
+          "appendAttribution": true
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        0
+      ],
+      "id": "ae480d95-54e2-4daf-9f9e-c2d358635a4b",
+      "name": "Send a message",
+      "webhookId": "77b46f89-3436-4eb9-9efa-6eaa04a7d522",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "2NNAuRNKFjju0qSo",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "31cfd964-3c92-4b8a-92e1-47fa5afa2fd2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f15adce7-fd27-41f8-80b4-fbe532e5bdba",
+      "name": "Webhook",
+      "webhookId": "31cfd964-3c92-4b8a-92e1-47fa5afa2fd2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "7b68a88d-0535-4a15-b2d3-2b20fa482fb8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d455cac9d8b091ddfc5711db06ac2b087c92535a7ecc59f7e9da72fa2c233451"
+  },
+  "nodeGroups": [],
+  "id": "MkH64c5O47vaH4MY",
+  "tags": []
+}
