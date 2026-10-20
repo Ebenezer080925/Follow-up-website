@@ -1,6 +1,6 @@
 // Replace this with your exact n8n webhook URL. 
 // Note: Use /webhook-test/... for testing and /webhook/... for live production.
-const WEBHOOK_URL = "https://ebenstones.app.n8n.cloud/webhook/31cfd964-3c92-4b8a-92e1-47fa5afa2fd2";
+const WEBHOOK_URL = "https://dataknight.app.n8n.cloud/webhook/c6df9505-f277-48c4-a4fa-f56f6cd541c8";
 
 const landing = document.getElementById('landing');
 const formScreen = document.getElementById('formScreen');
