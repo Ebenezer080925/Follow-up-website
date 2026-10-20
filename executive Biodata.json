@@ -3,12 +3,58 @@
   "nodes": [
     {
       "parameters": {
+        "httpMethod": "POST",
+        "path": "c6df9505-f277-48c4-a4fa-f56f6cd541c8",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        -448,
+        16
+      ],
+      "id": "5f1428bc-1e1c-4ced-b6d6-10c8b23bb11d",
+      "name": "Webhook",
+      "webhookId": "c6df9505-f277-48c4-a4fa-f56f6cd541c8"
+    },
+    {
+      "parameters": {
         "assignments": {
           "assignments": [
             {
-              "id": "998a00b2-0d2c-4200-9a8f-834a334bc6b0",
-              "name": "Date of Birth",
+              "id": "f13e5e72-5edb-4cae-84c6-b45287a7f2ee",
+              "name": "Full name",
+              "value": "={{ $json.body.full_name }}",
+              "type": "string"
+            },
+            {
+              "id": "2599c930-d366-42b9-af94-d87968e2edc5",
+              "name": "Potfolio in fellowship",
+              "value": "={{ $json.body.portfolio }}",
+              "type": "string"
+            },
+            {
+              "id": "61732f5e-7f06-4ca8-b1f1-2f8847ecfe97",
+              "name": "Whatsapp number",
+              "value": "={{ $json.body.whatsapp_number }}",
+              "type": "number"
+            },
+            {
+              "id": "caddbf73-ce6e-45a1-b975-30da13619b62",
+              "name": "Other number",
+              "value": "={{ $json.body.other_number }}",
+              "type": "number"
+            },
+            {
+              "id": "108b04d5-9bf5-44de-bbcc-120c144b69cd",
+              "name": "Date of birth",
               "value": "={{ DateTime.fromISO($json.body.date_of_birth).toFormat('dd MMMM') }}",
+              "type": "string"
+            },
+            {
+              "id": "933780c1-0112-46be-8fea-03543163f6f3",
+              "name": "Gmail ",
+              "value": "={{ $json.body.gmail }}",
               "type": "string"
             }
           ]
@@ -19,135 +65,16 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        224,
-        0
+        -208,
+        16
       ],
-      "id": "3a353efa-d919-4031-9da2-8f377b8e5b2d",
+      "id": "5bfec7bb-18d7-458b-a845-2ca8c0602837",
       "name": "Edit Fields"
     },
     {
       "parameters": {
-        "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "https://docs.google.com/spreadsheets/d/1VmYuWMLU3GtTdw8fnRKpcmI3Xd7W_wKA15UMtiSZWJA/edit?gid=0#gid=0",
-          "mode": "url"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Bio data",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VmYuWMLU3GtTdw8fnRKpcmI3Xd7W_wKA15UMtiSZWJA/edit#gid=0"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "Full name ": "={{ $('Webhook').item.json.body.full_name }}",
-            "Potfolio in fellowship": "={{ $('Webhook').item.json.body.portfolio }}",
-            "Whatsapp number ": "={{ $('Webhook').item.json.body.whatsapp_number }}",
-            "Other number": "={{ $('Webhook').item.json.body.other_number }}",
-            "Date of Birth": "={{ $('Edit Fields').item.json['Date of Birth'] }}",
-            "Profile picture": "={{ $json.webViewLink }}",
-            "Gmail": "={{ $('Webhook').item.json.body.gmail }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "Full name ",
-              "displayName": "Full name ",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Potfolio in fellowship",
-              "displayName": "Potfolio in fellowship",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Whatsapp number ",
-              "displayName": "Whatsapp number ",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Other number",
-              "displayName": "Other number",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Profile picture",
-              "displayName": "Profile picture",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Date of Birth",
-              "displayName": "Date of Birth",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Gmail",
-              "displayName": "Gmail",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        672,
-        0
-      ],
-      "id": "2a41c853-8991-4751-b50e-ec7c6d62f161",
-      "name": "Append row in sheet",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "8Vt5BSNrP5UfLDSE",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "inputDataFieldName": "profile_picture",
-        "name": "={{ $binary.profile_picture.fileName }}",
+        "inputDataFieldName": "={{ Object.keys($binary)[0] }}",
+        "name": "={{ $json['Full name'] }} - {{ $now.toMillis() }}",
         "driveId": {
           "__rl": true,
           "value": "My Drive",
@@ -167,78 +94,224 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        448,
-        0
+        16,
+        16
       ],
-      "id": "0d57bcb1-ad60-4e6f-8094-68bc583ff6e2",
+      "id": "4b1a683d-0b95-42e9-ab16-6838f1d3175e",
       "name": "Upload file",
       "credentials": {
         "googleDriveOAuth2Api": {
-          "id": "AYkslsQcLrrKGT4z",
-          "name": "Google Drive account"
+          "id": "PiukmNQSNyq3I7vq",
+          "name": "Google Drive account 6"
         }
       }
     },
     {
       "parameters": {
-        "sendTo": "={{ $('Webhook').item.json.body.gmail }} ",
-        "subject": "Thank you for Filling the form",
-        "message": "=Hi {{ $('Webhook').item.json.body.full_name.split(' ').pop() }} ,  Thank you for filling out the details for the RCF LASU Ojo executives list. We have successfully received your information and profile picture.  Best regards, The Team  How the First Na",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1VmYuWMLU3GtTdw8fnRKpcmI3Xd7W_wKA15UMtiSZWJA",
+          "mode": "list",
+          "cachedResultName": "Test executives Bio",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VmYuWMLU3GtTdw8fnRKpcmI3Xd7W_wKA15UMtiSZWJA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Bio data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VmYuWMLU3GtTdw8fnRKpcmI3Xd7W_wKA15UMtiSZWJA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Full name ": "={{ $('Edit Fields').item.json['Full name'] }}",
+            "Potfolio in fellowship": "={{ $('Edit Fields').item.json.body.portfolio }}",
+            "Other number": "={{ $('Edit Fields').item.json['Other number'] }}",
+            "Whatsapp number ": "={{ $('Edit Fields').item.json['Whatsapp number'] }}",
+            "Date of Birth": "={{ $('Edit Fields').item.json['Date of birth'] }}",
+            "Gmail": "={{ $('Edit Fields').item.json.body.gmail }}",
+            "Profile picture": "={{ $json.webViewLink }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Full name ",
+              "displayName": "Full name ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Potfolio in fellowship",
+              "displayName": "Potfolio in fellowship",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Whatsapp number ",
+              "displayName": "Whatsapp number ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Other number",
+              "displayName": "Other number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profile picture",
+              "displayName": "Profile picture",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date of Birth",
+              "displayName": "Date of Birth",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Gmail",
+              "displayName": "Gmail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        240,
+        16
+      ],
+      "id": "6fe7381e-b4a8-479b-98a1-4cdb139c790b",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "9VMwQj6BiSxYe09p",
+          "name": "Google Sheets account 8"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Gmail }}",
+        "subject": "As Regarding the form ",
+        "message": "=Dear {{ $('Edit Fields').item.json['Full name'].split(' ')[0] }},<br><br>\n\nWhy did you fill the form late? This really stressed us Big time. Please in case of another time ensure you do all other things needed on time.<br><br>\n\nThank you\n\n\n\n\n\n",
         "options": {
-          "appendAttribution": true
+          "appendAttribution": false
         }
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        880,
-        0
+        464,
+        16
       ],
-      "id": "ae480d95-54e2-4daf-9f9e-c2d358635a4b",
+      "id": "5300da79-7bc9-443b-92e8-71470e83f3dc",
       "name": "Send a message",
-      "webhookId": "77b46f89-3436-4eb9-9efa-6eaa04a7d522",
+      "webhookId": "5df99603-00f5-487d-a305-f8390e646fd0",
       "credentials": {
         "gmailOAuth2": {
-          "id": "2NNAuRNKFjju0qSo",
-          "name": "Gmail account"
+          "id": "tjGdErnRaBdlXf3J",
+          "name": "Gmail account 8"
         }
       }
     },
     {
       "parameters": {
-        "httpMethod": "POST",
-        "path": "31cfd964-3c92-4b8a-92e1-47fa5afa2fd2",
+        "formTitle": "Executive ",
+        "formDescription": "......",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Full name"
+            },
+            {
+              "fieldLabel": "Portfolio in fellowship"
+            },
+            {
+              "fieldLabel": "Whatsapp number",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "Other number",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "Date of birth",
+              "fieldType": "date"
+            },
+            {
+              "fieldLabel": "Gmail",
+              "fieldType": "email"
+            },
+            {
+              "fieldLabel": "Profile picture",
+              "fieldType": "file",
+              "acceptFileTypes": ".jpg, .jpeg, .png"
+            }
+          ]
+        },
         "options": {}
       },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
       "position": [
-        0,
-        0
+        -672,
+        -96
       ],
-      "id": "f15adce7-fd27-41f8-80b4-fbe532e5bdba",
-      "name": "Webhook",
-      "webhookId": "31cfd964-3c92-4b8a-92e1-47fa5afa2fd2"
+      "id": "fce23ed4-5a8f-4d18-a867-a8ac380c4bd7",
+      "name": "On form submission",
+      "webhookId": "9904885b-97f2-4478-b709-8a4c638b6bb0",
+      "disabled": true
     }
   ],
   "pinData": {},
   "connections": {
-    "Edit Fields": {
+    "Webhook": {
       "main": [
         [
           {
-            "node": "Upload file",
+            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Append row in sheet": {
+    "Edit Fields": {
       "main": [
         [
           {
-            "node": "Send a message",
+            "node": "Upload file",
             "type": "main",
             "index": 0
           }
@@ -256,29 +329,37 @@
         ]
       ]
     },
-    "Webhook": {
+    "Append row in sheet": {
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "Send a message",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        []
       ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1",
-    "binaryMode": "separate"
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
   },
-  "versionId": "7b68a88d-0535-4a15-b2d3-2b20fa482fb8",
+  "versionId": "d789aa2a-cfb5-462d-881b-d4f0d85ea21b",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "d455cac9d8b091ddfc5711db06ac2b087c92535a7ecc59f7e9da72fa2c233451"
+    "instanceId": "102319d8e8aa4c5eb93b0a606e725efcc7eb7ae75b65d4cccc985ad7817d0cb4"
   },
   "nodeGroups": [],
-  "id": "MkH64c5O47vaH4MY",
+  "id": "CRdaMSrAEgxlpLN5",
   "tags": []
 }
